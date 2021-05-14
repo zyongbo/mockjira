@@ -1,7 +1,7 @@
 import { SearchPanel } from "./search-panel";
 import { List } from "./list";
 import { useEffect, useState } from "react";
-import { cleanObject } from "../../utils";
+import { cleanObject, useMount } from "../../utils";
 import qs from "qs";
 
 // when we execute npm start, web package will read variables in .env.development
@@ -30,14 +30,24 @@ export const ProjectListScreen = () => {
   }, [param]);
 
   // depends on [] because we only want to initialize users once
-  useEffect(() => {
+  // how to get rid of the [] array?
+  // useEffect(() => {
+  //   // use `` here if it has variables to be replaced inside
+  //   fetch(`${apiUrl}/users`).then(async response => {
+  //     if (response.ok) {
+  //       setUsers(await response.json());
+  //     }
+  //   })
+  // }, [])
+
+  useMount(() => {
     // use `` here if it has variables to be replaced inside
     fetch(`${apiUrl}/users`).then(async response => {
       if (response.ok) {
         setUsers(await response.json());
       }
     })
-  }, [])
+  });
 
   return(
     <div>
