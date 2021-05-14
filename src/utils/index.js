@@ -1,5 +1,5 @@
 // !!value is to convert value to be boolean version
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const isValidValue = (value) => (value === 0 ? true : !!value);
 
@@ -53,3 +53,15 @@ export const useMount = (callback) => {
 //     log()#2 // 发现 timeout#1！取消之，然后设置timeout#2
 //     log()#3 // 发现 timeout#2! 取消之，然后设置timeout#3
 //             // 所以，log()#3 结束后，就只剩timeout#3在独自等待了
+
+export const useDebounce = (value, delay) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(() => {
+    // 每次在value变化以后，设置一个定时器
+    const timeout = setTimeout(() => setDebouncedValue(value), delay);
+    // 每次在上一个useEffect处理完以后再运行
+    return () => clearTimeout(timeout);
+  }, [value, debouncedValue]);
+
+  return debouncedValue;
+};

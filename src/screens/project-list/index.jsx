@@ -1,7 +1,7 @@
 import { SearchPanel } from "./search-panel";
 import { List } from "./list";
 import { useEffect, useState } from "react";
-import { cleanObject, useMount } from "../../utils";
+import { cleanObject, useDebounce, useMount } from "../../utils";
 import qs from "qs";
 
 // when we execute npm start, web package will read variables in .env.development
@@ -17,17 +17,21 @@ export const ProjectListScreen = () => {
   const [users, setUsers] = useState([]);
   const [list, setList] = useState([]);
 
+  // debounce example
+  const debounceParam = useDebounce(param, 1000);
+
+  // replace param with debounceParam to consume useDebounce() hook
   useEffect(() => {
     // use `` here if it has variables to be replaced inside
     // if there are too many params, then the url will very long, so we use qs to simplify it
     // if param is empty, then qs.stringify will make sure it returns empty as url parameters
     // fetch(`${apiUrl}/projects?name={param.name}&personId={param.personId}`).then(async response => {
-    fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(param))}`).then(async response => {
+    fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(debounceParam))}`).then(async response => {
       if (response.ok) {
         setList(await response.json());
       }
     })
-  }, [param]);
+  }, [debounceParam]);
 
   // depends on [] because we only want to initialize users once
   // how to get rid of the [] array?
