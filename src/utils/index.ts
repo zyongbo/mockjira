@@ -59,7 +59,7 @@ export const useMount = (callback: () => void) => {
 
 // to config delay as an optional number
 // will use generic to return the correct type
-export const useDebounce = (value: unknown, delay?: number): any => {
+export const useDebounce = <V>(value: V, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   // not report error when value is any type
