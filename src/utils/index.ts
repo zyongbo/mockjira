@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 // !!value is to convert value to be boolean version
 // ts expects you to specify one so that you are aware of it
-export const isValidValue = (value: any) => (value === 0 ? true : !!value);
+export const isValidValue = (value: unknown) => (value === 0 ? true : !!value);
 
 // when you write a function, do not try to change the object itself
 export const cleanObject = (object: object) => {
@@ -58,8 +58,13 @@ export const useMount = (callback: () => void) => {
 //             // 所以，log()#3 结束后，就只剩timeout#3在独自等待了
 
 // to config delay as an optional number
-export const useDebounce = (value: any, delay?: number) => {
+// will use generic to return the correct type
+export const useDebounce = (value: unknown, delay?: number): any => {
   const [debouncedValue, setDebouncedValue] = useState(value);
+
+  // not report error when value is any type
+  // console.log(value.mayNotExist)
+
   useEffect(() => {
     // 每次在value变化以后，设置一个定时器
     const timeout = setTimeout(() => setDebouncedValue(value), delay);
