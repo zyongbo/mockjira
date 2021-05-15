@@ -1,17 +1,20 @@
-// !!value is to convert value to be boolean version
 import { useEffect, useState } from "react";
 
-export const isValidValue = (value) => (value === 0 ? true : !!value);
+// !!value is to convert value to be boolean version
+// ts expects you to specify one so that you are aware of it
+export const isValidValue = (value: any) => (value === 0 ? true : !!value);
 
 // when you write a function, do not try to change the object itself
-export const cleanObject = (object) => {
+export const cleanObject = (object: object) => {
   // const result = Object.assign({}, object);
   const result = { ...object };
   Object.keys(result).forEach((key) => {
+    // @ts-ignore
     const value = result[key];
     // value might be 0, and 0 is a valid value, should not be false
     // if (!value) { // will be replaced by below
     if (!isValidValue(value)) {
+      // @ts-ignore
       delete result[key];
     }
   });
@@ -24,7 +27,7 @@ export const cleanObject = (object) => {
 // 1. All React hooks (system hooks and custom hooks) can not be called in normal functions
 // All React hooks can be called in other hooks!!!
 // 2. All React hooks can be called in elements (onChange like events)
-export const useMount = (callback) => {
+export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
   }, []);
@@ -54,7 +57,8 @@ export const useMount = (callback) => {
 //     log()#3 // 发现 timeout#2! 取消之，然后设置timeout#3
 //             // 所以，log()#3 结束后，就只剩timeout#3在独自等待了
 
-export const useDebounce = (value, delay) => {
+// to config delay as an optional number
+export const useDebounce = (value: any, delay?: number) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
     // 每次在value变化以后，设置一个定时器
