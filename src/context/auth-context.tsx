@@ -1,11 +1,24 @@
 import React, { ReactNode, useState } from "react";
 import * as auth from "auth-provider";
 import { User } from "../types/user";
+import { http } from "../utils/http";
+import { useMount } from "../utils";
 
 interface AuthForm {
   username: string;
   password: string;
 }
+
+const boostrapUser = async () => {
+  let user = null;
+  const token = auth.getToken();
+  if (token) {
+    // new endpoint 'me' is to get the user currently logged in
+    const data = await http("me", { token });
+    user = data.user;
+  }
+  return user;
+};
 
 // this component will be used in AuthProvider below
 // undefined is default value for an object
@@ -30,6 +43,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     auth.login(form).then((user) => setUser(user)); // same as below
   const register = (form: AuthForm) => auth.register(form).then(setUser); // same as above
   const logout = () => auth.logout().then(() => setUser(null));
+
+  useMount(() => {
+    boostrapUser().then(setUser);
+  });
+
   return (
     <AuthContext.Provider
       children={children}
