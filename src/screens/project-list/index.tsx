@@ -23,18 +23,20 @@ export const ProjectListScreen = () => {
   const debounceParam = useDebounce(param, 200);
 
   // replace param with debounceParam to consume useDebounce() hook
+  // axios 和fetch表现不一样，axios可以catch到failure status的异常
   useEffect(() => {
     // use `` here if it has variables to be replaced inside
     // if there are too many params, then the url will very long, so we use qs to simplify it
     // if param is empty, then qs.stringify will make sure it returns empty as url parameters
     // fetch(`${apiUrl}/projects?name={param.name}&personId={param.personId}`).then(async response => {
-    fetch(
-      `${apiUrl}/projects?${qs.stringify(cleanObject(debounceParam))}`
-    ).then(async (response) => {
-      if (response.ok) {
-        setList(await response.json());
-      }
-    });
+    fetch(`${apiUrl}/projects?${qs.stringify(cleanObject(debounceParam))}`)
+      .then(async (response) => {
+        if (response.ok) {
+          setList(await response.json());
+        }
+      })
+      .catch(() => alert("error happened"));
+    //only catch internet connection and request exception, not for 401, 403, 404, 500, but axios lib is able to catch it
   }, [debounceParam]);
 
   // depends on [] because we only want to initialize users once
