@@ -8,7 +8,7 @@ interface AuthForm {
 }
 
 // this component will be used in AuthProvider below
-// undefinded is default value for an object
+// undefined is default value for an object
 const AuthContext =
   React.createContext<
     | {
