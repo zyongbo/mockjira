@@ -1,6 +1,7 @@
 import React, { FormEvent } from "react";
 import { useAuth } from "../context/auth-context";
 import { Button, Form, Input } from "antd";
+import { LongButton } from "./index";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -69,9 +70,9 @@ export const LoginScreen = () => {
         <Input placeholder={"密码"} type={"password"} id={"password"} />
       </Form.Item>
       <Form.Item>
-        <Button htmlType={"submit"} type={"primary"}>
+        <LongButton htmlType={"submit"} type={"primary"}>
           登录
-        </Button>
+        </LongButton>
       </Form.Item>
     </Form>
   );
