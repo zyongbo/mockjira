@@ -4,6 +4,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { loadDevTools } from "jira-dev-tool";
+// have to be after dev tool because dev tool has also used antd,
+// in this case, the later is able to overwrite the previous one
+import "antd/dist/antd.less";
 import { AppProviders } from "./context";
 
 loadDevTools(() => {
