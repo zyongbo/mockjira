@@ -3,18 +3,22 @@ import { useEffect, useState } from "react";
 // !!value is to convert value to be boolean version
 // ts expects you to specify one so that you are aware of it
 export const isValidValue = (value: unknown) => (value === 0 ? true : !!value);
+export const isVoid = (value: unknown) =>
+  value === undefined || value === null || value === "" ? true : false;
 
 // when you write a function, do not try to change the object itself
-export const cleanObject = (object: object) => {
+// object: object means it can be anything like {} or function or any object in TS/JS
+// in order to make it as {key: value} object, we have to change the type from object to { [key: string]: unknown }
+export const cleanObject = (object: { [key: string]: unknown }) => {
   // const result = Object.assign({}, object);
   const result = { ...object };
   Object.keys(result).forEach((key) => {
-    // @ts-ignore
     const value = result[key];
     // value might be 0, and 0 is a valid value, should not be false
     // if (!value) { // will be replaced by below
-    if (!isValidValue(value)) {
-      // @ts-ignore
+    // when value is false, it may also delete it
+    // if (!isValidValue(value)) {
+    if (isVoid(value)) {
       delete result[key];
     }
   });
@@ -30,6 +34,7 @@ export const cleanObject = (object: object) => {
 export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
+    // TODO 依赖项里加callback会造成无限循环，这个和useCallback以及和useMemo有关系
   }, []);
 };
 
