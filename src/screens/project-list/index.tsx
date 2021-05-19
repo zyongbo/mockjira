@@ -5,6 +5,7 @@ import { cleanObject, useDebounce, useMount } from "../../utils";
 import qs from "qs";
 import { useHttp } from "../../utils/http";
 import styled from "@emotion/styled";
+import { Typography } from "antd";
 
 // 使用js的同学，大部分错误都在runtime的时候发现的
 // 我们希望在静态代码中的时候，就可以发现一些错误 -> 强类型的语言 ts
@@ -21,6 +22,9 @@ export const ProjectListScreen = () => {
   const [users, setUsers] = useState([]);
   const [list, setList] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<null | Error>(null);
+
   // debounce example
   const debounceParam = useDebounce(param, 200);
 
@@ -30,8 +34,15 @@ export const ProjectListScreen = () => {
   // replace param with debounceParam to consume useDebounce() hook
   // axios 和fetch表现不一样，axios可以catch到failure status的异常
   useEffect(() => {
+    setIsLoading(true);
     // use useHttp() to replace plain fetch function for http requests
-    client("projects", { data: cleanObject(debounceParam) }).then(setList);
+    client("projects", { data: cleanObject(debounceParam) })
+      .then(setList)
+      .catch((error) => {
+        setList([]);
+        setError(error);
+      })
+      .finally(() => setIsLoading(false));
 
     // use `` here if it has variables to be replaced inside
     // if there are too many params, then the url will very long, so we use qs to simplify it
@@ -73,7 +84,11 @@ export const ProjectListScreen = () => {
     <Container>
       <h1>项目列表</h1>
       <SearchPanel param={param} setParam={setParam} users={users} />
-      <List users={users} list={list} />
+      {/*<List users={users} list={list} />*/}
+      {error ? (
+        <Typography.Text type={"danger"}>{error.message}</Typography.Text>
+      ) : null}
+      <List loading={isLoading} users={users} dataSource={list} />
     </Container>
   );
 };
