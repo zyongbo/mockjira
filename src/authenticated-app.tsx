@@ -1,6 +1,7 @@
 import { ProjectListScreen } from "./screens/project-list";
 import { useAuth } from "./context/auth-context";
 import styled from "@emotion/styled";
+import { Row } from "./components/lib";
 
 /**
  * grid and flex 各自的应用场景
@@ -21,7 +22,10 @@ export const AuthenticatedApp = () => {
       {/*  <button onClick={logout}>登出</button>*/}
       {/*</PageHeader>*/}
       <Header>
-        <HeaderLeft>
+        <HeaderLeft gap={true}>
+          {/*<HeaderItem>logo</HeaderItem>*/}
+          {/*<HeaderItem>项目</HeaderItem>*/}
+          {/*<HeaderItem>用户</HeaderItem>*/}
           <h3>logo</h3>
           <h3>项目</h3>
           <h3>用户</h3>
@@ -30,15 +34,19 @@ export const AuthenticatedApp = () => {
           <button onClick={logout}>登出</button>
         </HeaderRight>
       </Header>
-      <Nav>Nav</Nav>
+      {/*<Nav>Nav</Nav>*/}
       <Main>
         <ProjectListScreen />
       </Main>
-      <Aside>Aside</Aside>
-      <Footer>Footer</Footer>
+      {/*<Aside>Aside</Aside>*/}
+      {/*<Footer>Footer</Footer>*/}
     </Container>
   );
 };
+
+const HeaderItem = styled.h3`
+  margin-right: 3rem;
+`;
 
 // const PageHeader = styled.header`
 //   background-color: gray;
@@ -60,10 +68,10 @@ const Container = styled.div`
   // header one row, footer one row
   grid-template-areas:
     "header header header"
-    "nav main aside"
+    "main main main"
     "footer footer footer";
   height: 100vh;
-  grid-gap: 10rem;
+  //grid-gap: 10rem;
 `;
 // grid-area是用来给grid子元素起名字
 const Header = styled.header`
@@ -73,21 +81,30 @@ const Header = styled.header`
   align-items: center;
   justify-content: space-between;
 `;
-const HeaderLeft = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
+
+// const Header = styled(Row)`
+//   //padding: 3.2rem;
+//   //box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+//   //z-index: 1;
+// `;
+
+const HeaderLeft = styled(Row)``;
+
+// const HeaderLeft = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+// `;
 const HeaderRight = styled.div``;
 const Main = styled.main`
   grid-area: main;
 `;
-const Nav = styled.nav`
-  grid-area: nav;
-`;
-const Aside = styled.aside`
-  grid-area: aside;
-`;
-const Footer = styled.footer`
-  grid-area: footer;
-`;
+// const Nav = styled.nav`
+//   grid-area: nav;
+// `;
+// const Aside = styled.aside`
+//   grid-area: aside;
+// `;
+// const Footer = styled.footer`
+//   grid-area: footer;
+// `;
