@@ -1,6 +1,5 @@
+import { Form, Input, Select } from "antd";
 // import { useEffect, useState } from "react";
-
-import { Input, Select } from "antd";
 
 export interface User {
   id: string;
@@ -42,43 +41,48 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
   // }, [param]);
 
   return (
-    <form>
-      {/*setParam(Object.assign({}, param, {name: event.target.value}))*/}
-      <Input
-        type="text"
-        value={param.name}
-        onChange={(event) =>
-          setParam({
-            ...param,
-            name: event.target.value,
-          })
-        }
-      />
-      {/*<Select*/}
-      {/*  value={param.personId}*/}
-      {/*  onChange={(event) =>*/}
-      {/*    setParam({*/}
-      {/*      ...param,*/}
-      {/*      personId: event.target.value,*/}
-      {/*    })*/}
-      {/*  }*/}
-      {/*>*/}
-      <Select
-        value={param.personId}
-        onChange={(value) =>
-          setParam({
-            ...param,
-            personId: value,
-          })
-        }
-      >
-        <Select.Option value={""}>负责人</Select.Option>
-        {users.map((user) => (
-          <option key={user.id} value={user.id}>
-            {user.name}
-          </option>
-        ))}
-      </Select>
-    </form>
+    <Form style={{ marginBottom: "2rem" }} layout={"inline"}>
+      <Form.Item>
+        {/*setParam(Object.assign({}, param, {name: event.target.value}))*/}
+        <Input
+          placeholder={"项目名"}
+          type="text"
+          value={param.name}
+          onChange={(event) =>
+            setParam({
+              ...param,
+              name: event.target.value,
+            })
+          }
+        />
+        {/*<Select*/}
+        {/*  value={param.personId}*/}
+        {/*  onChange={(event) =>*/}
+        {/*    setParam({*/}
+        {/*      ...param,*/}
+        {/*      personId: event.target.value,*/}
+        {/*    })*/}
+        {/*  }*/}
+        {/*>*/}
+      </Form.Item>
+      <Form.Item>
+        <Select
+          value={param.personId}
+          onChange={(value) =>
+            setParam({
+              ...param,
+              personId: value,
+            })
+          }
+        >
+          <Select.Option value={""}>负责人</Select.Option>
+          {users.map((user) => (
+            <option key={user.id} value={user.id}>
+              {user.name}
+            </option>
+          ))}
+        </Select>
+      </Form.Item>
+    </Form>
   );
 };

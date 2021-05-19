@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { cleanObject, useDebounce, useMount } from "../../utils";
 import qs from "qs";
 import { useHttp } from "../../utils/http";
+import styled from "@emotion/styled";
 
 // 使用js的同学，大部分错误都在runtime的时候发现的
 // 我们希望在静态代码中的时候，就可以发现一些错误 -> 强类型的语言 ts
@@ -69,9 +70,14 @@ export const ProjectListScreen = () => {
   });
 
   return (
-    <div>
+    <Container>
+      <h1>项目列表</h1>
       <SearchPanel param={param} setParam={setParam} users={users} />
       <List users={users} list={list} />
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding: 3.2rem;
+`;
