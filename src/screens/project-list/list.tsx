@@ -1,15 +1,17 @@
-import { User } from "./search-panel";
+// import { User } from "./search-panel";
 import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
+import { Project } from "../../types/projects";
+import { User } from "../../types/user";
 
-interface Project {
-  id: string;
-  name: string;
-  personId: string;
-  pin: string;
-  organization: string;
-  created: number;
-}
+// interface Project {
+//   id: string;
+//   name: string;
+//   personId: string;
+//   pin: string;
+//   organization: string;
+//   created: number;
+// }
 
 // interface ListProps {
 //   list: Project[];
