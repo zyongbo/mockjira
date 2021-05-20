@@ -3,6 +3,8 @@ import * as auth from "auth-provider";
 import { User } from "../types/user";
 import { http } from "../utils/http";
 import { useMount } from "../utils";
+import { useAsync } from "../utils/use-async";
+import { FullPageErrorFallback, FullPageLoading } from "../components/lib";
 
 interface AuthForm {
   username: string;
@@ -36,7 +38,16 @@ AuthContext.displayName = "AuthContext";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // specify it as User type or null
-  const [user, setUser] = useState<User | null>(null);
+  // const [user, setUser] = useState<User | null>(null);
+  const {
+    data: user,
+    error,
+    isLoading,
+    isIdle,
+    isError,
+    run,
+    setData: setUser,
+  } = useAsync<User | null>();
   // both usage of setUser are correct
   // if both the input variable and the called function's arguments are the same, then we can shorten it with the function name
   const login = (form: AuthForm) =>
@@ -45,8 +56,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => auth.logout().then(() => setUser(null));
 
   useMount(() => {
-    boostrapUser().then(setUser);
+    // boostrapUser().then(setUser);
+    run(boostrapUser());
   });
+
+  if (isIdle || isLoading) {
+    // return(<p>Loading...</p>);
+    return <FullPageLoading />;
+  }
+
+  if (isError) {
+    return <FullPageErrorFallback error={error} />;
+  }
 
   return (
     <AuthContext.Provider
@@ -57,6 +78,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 };
 
 // TODO - how to use it?
+// AuthContext.Provider will be used to wrap all other children elements
+// when call useAuth, it will retrieve the AuthContext used in AuthContext.Provider
 export const useAuth = () => {
   const context = React.useContext(AuthContext);
   if (!context) {
