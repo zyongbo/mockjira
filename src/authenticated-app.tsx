@@ -18,8 +18,11 @@ import { Button, Dropdown, Menu } from "antd";
 
 export const AuthenticatedApp = () => {
   const { logout, user } = useAuth();
+  // const value: any = undefined;
   return (
     <Container>
+      {/*Error Boundaries for uncaught errors*/}
+      {/*{value.noExist}*/}
       {/*<PageHeader>*/}
       {/*  <button onClick={logout}>登出</button>*/}
       {/*</PageHeader>*/}
