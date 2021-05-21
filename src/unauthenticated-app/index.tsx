@@ -7,14 +7,23 @@ import logo from "assets/logo.svg";
 import right from "assets/right.svg";
 import left from "assets/left.svg";
 import { set } from "husky";
+// 1. Method 1 to add title for each page
+import { Helmet } from "react-helmet";
+import { useDocumentTitle } from "../utils";
 
 export const UnauthenticatedApp = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
+  // 2. Method 2 to change the page title
+  useDocumentTitle("请登录或注册以继续");
+
   return (
     // <div style={{ display: "flex", justifyContent: "center" }}>
     <Container>
+      {/*<Helmet>*/}
+      {/*  <title>请登录或注册以继续</title>*/}
+      {/*</Helmet>*/}
       <Header />
       <Background />
       {/*<Button onClick={() => {*/}

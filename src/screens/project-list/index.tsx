@@ -1,7 +1,12 @@
 import { SearchPanel } from "./search-panel";
 import { List } from "./list";
 import { useEffect, useState } from "react";
-import { cleanObject, useDebounce, useMount } from "../../utils";
+import {
+  cleanObject,
+  useDebounce,
+  useDocumentTitle,
+  useMount,
+} from "../../utils";
 import qs from "qs";
 import { useHttp } from "../../utils/http";
 import styled from "@emotion/styled";
@@ -10,6 +15,7 @@ import { useAsync } from "../../utils/use-async";
 import { Project } from "../../types/projects";
 import { useProjects } from "../../utils/projects";
 import { useUsers } from "../../utils/user";
+import { Helmet } from "react-helmet";
 
 // 使用js的同学，大部分错误都在runtime的时候发现的
 // 我们希望在静态代码中的时候，就可以发现一些错误 -> 强类型的语言 ts
@@ -90,8 +96,14 @@ export const ProjectListScreen = () => {
   // });
   // });
 
+  // 2. Method 2 to change the page title
+  useDocumentTitle("项目列表", false);
+
   return (
     <Container>
+      {/*<Helmet>*/}
+      {/*  <title>项目列表</title>*/}
+      {/*</Helmet>*/}
       <h1>项目列表</h1>
       <SearchPanel param={param} setParam={setParam} users={users || []} />
       {/*<List users={users} list={list} />*/}
