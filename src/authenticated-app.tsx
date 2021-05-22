@@ -4,6 +4,13 @@ import styled from "@emotion/styled";
 import { Row } from "./components/lib";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
 import { Button, Dropdown, Menu } from "antd";
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
+import { ProjectScreen } from "./screens/project";
 
 /**
  * grid and flex 各自的应用场景
@@ -17,7 +24,7 @@ import { Button, Dropdown, Menu } from "antd";
  */
 
 export const AuthenticatedApp = () => {
-  const { logout, user } = useAuth();
+  // const { logout, user } = useAuth();
   // const value: any = undefined;
   return (
     <Container>
@@ -26,44 +33,93 @@ export const AuthenticatedApp = () => {
       {/*<PageHeader>*/}
       {/*  <button onClick={logout}>登出</button>*/}
       {/*</PageHeader>*/}
-      <Header>
-        <HeaderLeft gap={true}>
-          {/*<HeaderItem>logo</HeaderItem>*/}
-          {/*<HeaderItem>项目</HeaderItem>*/}
-          {/*<HeaderItem>用户</HeaderItem>*/}
-          {/*<img src={softwareLogo} />*/}
-          <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
-          <h3>项目</h3>
-          <h3>用户</h3>
-        </HeaderLeft>
-        <HeaderRight>
-          {/*<button onClick={logout}>登出</button>*/}
-          <Dropdown
-            overlay={
-              <Menu>
-                <Menu.Item>
-                  {/*if there's no link, then it will give out warnings*/}
-                  {/*<a onClick={logout}>登出</a>*/}
-                  <Button type={"link"} onClick={logout}>
-                    登出
-                  </Button>
-                </Menu.Item>
-              </Menu>
-            }
-          >
-            <Button type={"link"} onClick={(e) => e.preventDefault()}>
-              Hi, {user?.name}
-            </Button>
-          </Dropdown>
-        </HeaderRight>
-      </Header>
       {/*<Nav>Nav</Nav>*/}
+      {/*<Header>*/}
+      {/*  <HeaderLeft gap={true}>*/}
+      {/*    /!*<HeaderItem>logo</HeaderItem>*!/*/}
+      {/*    /!*<HeaderItem>项目</HeaderItem>*!/*/}
+      {/*    /!*<HeaderItem>用户</HeaderItem>*!/*/}
+      {/*    /!*<img src={softwareLogo} />*!/*/}
+      {/*    <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />*/}
+      {/*    <h3>项目</h3>*/}
+      {/*    <h3>用户</h3>*/}
+      {/*  </HeaderLeft>*/}
+      {/*  <HeaderRight>*/}
+      {/*    /!*<button onClick={logout}>登出</button>*!/*/}
+      {/*    <Dropdown*/}
+      {/*      overlay={*/}
+      {/*        <Menu>*/}
+      {/*          <Menu.Item>*/}
+      {/*            /!*if there's no link, then it will give out warnings*!/*/}
+      {/*            /!*<a onClick={logout}>登出</a>*!/*/}
+      {/*            <Button type={"link"} onClick={logout}>*/}
+      {/*              登出*/}
+      {/*            </Button>*/}
+      {/*          </Menu.Item>*/}
+      {/*        </Menu>*/}
+      {/*      }*/}
+      {/*    >*/}
+      {/*      <Button type={"link"} onClick={(e) => e.preventDefault()}>*/}
+      {/*        Hi, {user?.name}*/}
+      {/*      </Button>*/}
+      {/*    </Dropdown>*/}
+      {/*  </HeaderRight>*/}
+      {/*</Header>*/}
+      <PageHeader />
       <Main>
-        <ProjectListScreen />
+        {/*<ProjectListScreen />*/}
+        {/*all the routes under router will share the same context, so router is to provide the context*/}
+        <Router>
+          <Routes>
+            <Route path={"/projects"} element={<ProjectListScreen />} />
+            <Route
+              path={"/projects/:projectId/*"}
+              element={<ProjectScreen />}
+            />
+            <Navigate to={"/projects"} />
+          </Routes>
+        </Router>
       </Main>
       {/*<Aside>Aside</Aside>*/}
       {/*<Footer>Footer</Footer>*/}
     </Container>
+  );
+};
+
+const PageHeader = () => {
+  const { logout, user } = useAuth();
+  return (
+    <Header>
+      <HeaderLeft gap={true}>
+        {/*<HeaderItem>logo</HeaderItem>*/}
+        {/*<HeaderItem>项目</HeaderItem>*/}
+        {/*<HeaderItem>用户</HeaderItem>*/}
+        {/*<img src={softwareLogo} />*/}
+        <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
+        <h3>项目</h3>
+        <h3>用户</h3>
+      </HeaderLeft>
+      <HeaderRight>
+        {/*<button onClick={logout}>登出</button>*/}
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item>
+                {/*if there's no link, then it will give out warnings*/}
+                {/*<a onClick={logout}>登出</a>*/}
+                <Button type={"link"} onClick={logout}>
+                  登出
+                </Button>
+              </Menu.Item>
+            </Menu>
+          }
+        >
+          <Button type={"link"} onClick={(e) => e.preventDefault()}>
+            Hi, {user?.name}
+          </Button>
+        </Dropdown>
+      </HeaderRight>
+    </Header>
   );
 };
 
