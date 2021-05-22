@@ -11,6 +11,7 @@ import {
   Routes,
 } from "react-router-dom";
 import { ProjectScreen } from "./screens/project";
+import { resetRoute } from "./utils";
 
 /**
  * grid and flex 各自的应用场景
@@ -76,6 +77,7 @@ export const AuthenticatedApp = () => {
               path={"/projects/:projectId/*"}
               element={<ProjectScreen />}
             />
+            {/*navigate to a default route when above cannot be matched*/}
             <Navigate to={"/projects"} />
           </Routes>
         </Router>
@@ -95,7 +97,9 @@ const PageHeader = () => {
         {/*<HeaderItem>项目</HeaderItem>*/}
         {/*<HeaderItem>用户</HeaderItem>*/}
         {/*<img src={softwareLogo} />*/}
-        <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
+        <Button type={"link"} onClick={resetRoute}>
+          <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
+        </Button>
         <h3>项目</h3>
         <h3>用户</h3>
       </HeaderLeft>
