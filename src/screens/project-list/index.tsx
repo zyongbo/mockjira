@@ -26,10 +26,10 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 export const ProjectListScreen = () => {
   // used to control the selection behavior for project name and project manager
-  const [, setParam] = useState({
-    name: "",
-    personId: "",
-  });
+  // const [, setParam] = useState({
+  //   name: "",
+  //   personId: "",
+  // });
 
   const [keys, setKeys] = useState<("name" | "personId")[]>([
     "name",
@@ -39,7 +39,7 @@ export const ProjectListScreen = () => {
   // 基本类型，可以放到依赖里；组件状态，可以放到依赖里；非组件状态的对象，绝不可以放到依赖里
   // https://codesandbox.io/s/keen-wave-tlz9s?file=/src/App.js
   // const [param] = useUrlQueryParam(['name', 'personId']);
-  const [param] = useUrlQueryParam(keys);
+  const [param, setParam] = useUrlQueryParam(keys);
   // const [users, setUsers] = useState([]);
   // const [list, setList] = useState([]);
 
@@ -127,7 +127,8 @@ export const ProjectListScreen = () => {
 };
 
 // track this component only
-ProjectListScreen.whyDidYouRender = true;
+// debug purpose
+ProjectListScreen.whyDidYouRender = false;
 
 const Container = styled.div`
   padding: 3.2rem;

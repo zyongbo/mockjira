@@ -1,5 +1,6 @@
-import { useSearchParams } from "react-router-dom";
+import { URLSearchParamsInit, useSearchParams } from "react-router-dom";
 import { useMemo } from "react";
+import { cleanObject } from "./index";
 
 /**
  * 返回url中指定的param的值
@@ -32,6 +33,14 @@ export const useUrlQueryParam = <K extends string>(keys: K[]) => {
         }, {} as { [key in K]: string }),
       [searchParams, keys]
     ),
-    setSearchParams,
+    // setSearchParams,
+    // iterator: https://codesandbox.io/s/upbeat-wood-bum3j?file=/src/index.js
+    (params: Partial<{ [key in K]: unknown }>) => {
+      const obj = cleanObject({
+        ...Object.fromEntries(searchParams),
+        ...params,
+      }) as URLSearchParamsInit;
+      return setSearchParams(obj);
+    },
   ] as const;
 };
