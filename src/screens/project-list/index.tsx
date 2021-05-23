@@ -16,6 +16,7 @@ import { Project } from "../../types/projects";
 import { useProjects } from "../../utils/projects";
 import { useUsers } from "../../utils/user";
 import { Helmet } from "react-helmet";
+import { useUrlQueryParam } from "../../utils/url";
 
 // 使用js的同学，大部分错误都在runtime的时候发现的
 // 我们希望在静态代码中的时候，就可以发现一些错误 -> 强类型的语言 ts
@@ -25,10 +26,20 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 export const ProjectListScreen = () => {
   // used to control the selection behavior for project name and project manager
-  const [param, setParam] = useState({
+  const [, setParam] = useState({
     name: "",
     personId: "",
   });
+
+  const [keys, setKeys] = useState<("name" | "personId")[]>([
+    "name",
+    "personId",
+  ]);
+
+  // 基本类型，可以放到依赖里；组件状态，可以放到依赖里；非组件状态的对象，绝不可以放到依赖里
+  // https://codesandbox.io/s/keen-wave-tlz9s?file=/src/App.js
+  // const [param] = useUrlQueryParam(['name', 'personId']);
+  const [param] = useUrlQueryParam(keys);
   // const [users, setUsers] = useState([]);
   // const [list, setList] = useState([]);
 
@@ -114,6 +125,9 @@ export const ProjectListScreen = () => {
     </Container>
   );
 };
+
+// track this component only
+ProjectListScreen.whyDidYouRender = true;
 
 const Container = styled.div`
   padding: 3.2rem;
