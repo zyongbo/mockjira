@@ -112,6 +112,15 @@ export const ProjectListScreen = () => {
 
   return (
     <Container>
+      {/*to test the type of value form the evt or input box*/}
+      {/*<select onChange={evt => {*/}
+      {/*  const value = evt.target.value;*/}
+      {/*  console.log(value, typeof value);*/}
+      {/*}}>*/}
+      {/*  <option value={undefined}>默认选项</option>*/}
+      {/*  <option value={1}>第一个选项</option>*/}
+      {/*</select>*/}
+
       {/*<Helmet>*/}
       {/*  <title>项目列表</title>*/}
       {/*</Helmet>*/}
