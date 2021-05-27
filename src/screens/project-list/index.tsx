@@ -13,7 +13,7 @@ import styled from "@emotion/styled";
 import { Typography } from "antd";
 import { useAsync } from "../../utils/use-async";
 import { Project } from "../../types/project";
-import { useProjects } from "../../utils/projects";
+import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
 import { Helmet } from "react-helmet";
 import { useUrlQueryParam } from "../../utils/url";

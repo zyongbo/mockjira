@@ -5,6 +5,8 @@ import { Project } from "../../types/project";
 import { User } from "../../types/user";
 // react-router 和 react-router-dom的关系，类似于 react 和 react-dom/react-native/react-vr...
 import { Link } from "react-router-dom";
+import { Pin } from "../../components/pin";
+import { useEditProject } from "../../utils/project";
 
 // interface Project {
 //   id: string;
@@ -29,11 +31,29 @@ interface ListProps extends TableProps<Project> {
 // isLoading will be passed as one of Table's props
 // List's props includes Table's props and users
 export const List = ({ users, ...props }: ListProps) => {
+  const { mutate } = useEditProject();
+  const pinProject = (id: number, pin: boolean) => mutate({ id, pin });
+  // const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
   return (
     <Table
       rowKey={"id"}
       pagination={false}
       columns={[
+        {
+          title: <Pin checked={true} disabled={true} />,
+          render(value, project) {
+            // return <Pin checked={project.pin} onCheckedChange={(pin) => {
+            //   mutate({ id: project.id, pin: pin });
+            // }} />;
+            return (
+              <Pin
+                checked={project.pin}
+                onCheckedChange={(pin) => pinProject(project.id, pin)}
+              />
+            );
+            // return <Pin checked={project.pin} onCheckedChange={pinProject(project.id)} />;
+          },
+        },
         {
           title: "名称",
           // dataIndex: "name",
