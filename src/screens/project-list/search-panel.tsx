@@ -1,5 +1,7 @@
 import { Form, Input, Select } from "antd";
 import { User } from "../../types/user";
+import { Project } from "../../types/project";
+import { UserSelect } from "../../components/user-select";
 // import { useEffect, useState } from "react";
 
 // export interface User {
@@ -13,10 +15,11 @@ import { User } from "../../types/user";
 
 interface SearchPanelProps {
   users: User[];
-  param: {
-    name: string;
-    personId: string;
-  };
+  param: Partial<Pick<Project, "name" | "personId">>;
+  // param: {
+  //   name: string;
+  //   personId: string;
+  // };
   setParam: (param: SearchPanelProps["param"]) => void;
 }
 
@@ -67,7 +70,8 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
         {/*>*/}
       </Form.Item>
       <Form.Item>
-        <Select
+        <UserSelect
+          defaultOptionName={"负责人"}
           value={param.personId}
           onChange={(value) =>
             setParam({
@@ -75,14 +79,23 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
               personId: value,
             })
           }
-        >
-          <Select.Option value={""}>负责人</Select.Option>
-          {users.map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.name}
-            </option>
-          ))}
-        </Select>
+        />
+        {/*<Select*/}
+        {/*  value={param.personId}*/}
+        {/*  onChange={(value) =>*/}
+        {/*    setParam({*/}
+        {/*      ...param,*/}
+        {/*      personId: value,*/}
+        {/*    })*/}
+        {/*  }*/}
+        {/*>*/}
+        {/*  <Select.Option value={""}>负责人</Select.Option>*/}
+        {/*  {users.map((user) => (*/}
+        {/*    <option key={user.id} value={user.id}>*/}
+        {/*      {user.name}*/}
+        {/*    </option>*/}
+        {/*  ))}*/}
+        {/*</Select>*/}
       </Form.Item>
     </Form>
   );

@@ -1,7 +1,7 @@
 // import { User } from "./search-panel";
 import { Table, TableProps } from "antd";
 import dayjs from "dayjs";
-import { Project } from "../../types/projects";
+import { Project } from "../../types/project";
 import { User } from "../../types/user";
 // react-router 和 react-router-dom的关系，类似于 react 和 react-dom/react-native/react-vr...
 import { Link } from "react-router-dom";

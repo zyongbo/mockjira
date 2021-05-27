@@ -12,11 +12,12 @@ import { useHttp } from "../../utils/http";
 import styled from "@emotion/styled";
 import { Typography } from "antd";
 import { useAsync } from "../../utils/use-async";
-import { Project } from "../../types/projects";
+import { Project } from "../../types/project";
 import { useProjects } from "../../utils/projects";
 import { useUsers } from "../../utils/user";
 import { Helmet } from "react-helmet";
 import { useUrlQueryParam } from "../../utils/url";
+import { useProjectsSearchParams } from "./util";
 
 // 使用js的同学，大部分错误都在runtime的时候发现的
 // 我们希望在静态代码中的时候，就可以发现一些错误 -> 强类型的语言 ts
@@ -31,29 +32,32 @@ export const ProjectListScreen = () => {
   //   personId: "",
   // });
 
-  const [keys, setKeys] = useState<("name" | "personId")[]>([
-    "name",
-    "personId",
-  ]);
+  // const [keys, setKeys] = useState<("name" | "personId")[]>([
+  //   "name",
+  //   "personId",
+  // ]);
 
   // 基本类型，可以放到依赖里；组件状态，可以放到依赖里；非组件状态的对象，绝不可以放到依赖里
   // https://codesandbox.io/s/keen-wave-tlz9s?file=/src/App.js
   // const [param] = useUrlQueryParam(['name', 'personId']);
-  const [param, setParam] = useUrlQueryParam(keys);
+  // const [param, setParam] = useUrlQueryParam(keys);
   // const [users, setUsers] = useState([]);
   // const [list, setList] = useState([]);
 
   // const [isLoading, setIsLoading] = useState(false);
   // const [error, setError] = useState<null | Error>(null);
 
+  const [param, setParam] = useProjectsSearchParams();
+  // const projectParam = {...param, personId: Number(param.personId) || undefined};
+
   // debounce example
-  const debounceParam = useDebounce(param, 200);
+  // const debounceParam = useDebounce(projectParam, 200);
 
   // use useHttp() to replace plain fetch function for http requests
   // const client = useHttp();
 
   // const {run, isLoading, error, data: list} = useAsync<Project[]>();
-  const { isLoading, error, data: list } = useProjects(debounceParam);
+  const { isLoading, error, data: list } = useProjects(useDebounce(param, 200));
   // fetch data and assign an alias as users
   const { data: users } = useUsers();
 
@@ -137,7 +141,7 @@ export const ProjectListScreen = () => {
 
 // track this component only
 // debug purpose
-ProjectListScreen.whyDidYouRender = false;
+ProjectListScreen.whyDidYouRender = true;
 
 const Container = styled.div`
   padding: 3.2rem;

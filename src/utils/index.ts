@@ -34,7 +34,7 @@ export const cleanObject = (object: { [key: string]: unknown }) => {
 export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
-    // TODO 依赖项里加callback会造成无限循环，这个和useCallback以及和useMemo有关系
+    // TODO 依赖项里加callback会造成无限循环，这个和useCallback以及和有关系
   }, []);
 };
 
