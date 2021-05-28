@@ -26,6 +26,7 @@ import { useEditProject } from "../../utils/project";
 // TableProps<Project> will define list: Project[];
 interface ListProps extends TableProps<Project> {
   users: User[];
+  refresh?: () => void;
 }
 
 // isLoading will be passed as one of Table's props
