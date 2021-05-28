@@ -32,7 +32,7 @@ interface ListProps extends TableProps<Project> {
 // List's props includes Table's props and users
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();
-  const pinProject = (id: number, pin: boolean) => mutate({ id, pin });
+  const pinProject = (id: number, pin: boolean) => mutate({ id, pin }).then();
   // const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
   return (
     <Table

@@ -80,6 +80,7 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
             })
           }
         />
+
         {/*<Select*/}
         {/*  value={param.personId}*/}
         {/*  onChange={(value) =>*/}

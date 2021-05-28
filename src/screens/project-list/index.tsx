@@ -10,7 +10,7 @@ import {
 import qs from "qs";
 import { useHttp } from "../../utils/http";
 import styled from "@emotion/styled";
-import { Typography } from "antd";
+import { Button, Typography } from "antd";
 import { useAsync } from "../../utils/use-async";
 import { Project } from "../../types/project";
 import { useProjects } from "../../utils/project";
@@ -57,7 +57,12 @@ export const ProjectListScreen = () => {
   // const client = useHttp();
 
   // const {run, isLoading, error, data: list} = useAsync<Project[]>();
-  const { isLoading, error, data: list } = useProjects(useDebounce(param, 200));
+  const {
+    isLoading,
+    error,
+    data: list,
+    retry,
+  } = useProjects(useDebounce(param, 200));
   // fetch data and assign an alias as users
   const { data: users } = useUsers();
 
@@ -129,6 +134,7 @@ export const ProjectListScreen = () => {
       {/*  <title>项目列表</title>*/}
       {/*</Helmet>*/}
       <h1>项目列表</h1>
+      {/*<Button onClick={retry}>retry</Button>*/}
       <SearchPanel param={param} setParam={setParam} users={users || []} />
       {/*<List users={users} list={list} />*/}
       {error ? (
